@@ -1,125 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { Header, Footer } from './components/ui/Layout';
-import { Hero } from './components/sections/Hero';
-import { About, WhyChoose, Testimonials } from './components/sections/Content';
-import { Collections, SignatureBouquets, Gallery } from './components/sections/Products';
-import { Contact } from './components/sections/Contact';
-import { Shop } from './components/Shop';
-import { ProductDetail } from './components/ProductDetail';
-import { Admin } from './components/Admin';
-import { Login } from './components/Login';
-import { FlowerProduct } from './types';
-import { PRODUCTS as INITIAL_PRODUCTS } from './data';
+
+import React, { useState, useEffect, Suspense } from 'react';
+import { MainLayout } from './components/layout/MainLayout';
+import { ProductService } from './features/product/product.service';
+import { FlowerProduct } from './features/product/product.type';
+import { ViewState } from './types/common';
+import { ChatBox } from './features/chat/components/ChatBox';
+
+const Home = React.lazy(() => import('./pages/home.page'));
+const ShopPage = React.lazy(() => import('./pages/shop.page'));
+const ProductDetail = React.lazy(() => import('./pages/product-detail.page').then(m => ({ default: m.ProductDetail })));
+const Login = React.lazy(() => import('./pages/login.page').then(m => ({ default: m.Login })));
+const MemberPage = React.lazy(() => import('./pages/member.page').then(m => ({ default: m.MemberPage })));
+
+const Loader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-cream-50 italic font-serif text-mocha-300">
+    Lamie is preparing flowers...
+  </div>
+);
 
 function App() {
-  const [currentView, setView] = useState<'home' | 'shop' | 'product' | 'admin'>('home');
+  const [view, setView] = useState<ViewState>('home');
+  const [products, setProducts] = useState<FlowerProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<FlowerProduct | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  // Initialize state from LocalStorage or Fallback to Data.ts
-  const [products, setProducts] = useState<FlowerProduct[]>(() => {
-    const saved = localStorage.getItem('lamie_products');
-    return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
-  });
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('lamie_token'));
+  const [loading, setLoading] = useState(true);
 
-  // Check for auth token on mount
   useEffect(() => {
-    const token = localStorage.getItem('lamie_auth_token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    ProductService.getAll().then(data => {
+      setProducts(data);
+      setLoading(false);
+    });
   }, []);
 
-  // Persist changes to LocalStorage
-  useEffect(() => {
-    localStorage.setItem('lamie_products', JSON.stringify(products));
-  }, [products]);
-
-  const navigateToShop = () => {
-    setView('shop');
+  const navigate = (v: string, p?: FlowerProduct) => {
+    if (p) setSelectedProduct(p);
+    setView(v as ViewState);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleProductClick = (product: FlowerProduct) => {
-    setSelectedProduct(product);
-    setView('product');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
-    // Already in admin view conceptually, but ensure render updates
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('lamie_auth_token');
-    setIsAuthenticated(false);
-    setView('home'); // Go home after logout
+    localStorage.removeItem('lamie_token');
+    setIsAuth(false);
+    setView('home');
   };
 
-  // Helper to render Admin or Login based on auth status
-  const renderAdminSection = () => {
-    if (isAuthenticated) {
-      return (
-        <Admin 
-          products={products} 
-          setProducts={setProducts} 
-          onExit={() => setView('home')}
-          onLogout={handleLogout}
-        />
-      );
-    }
-    return (
-      <Login 
-        onLoginSuccess={handleLoginSuccess} 
-        onCancel={() => setView('home')} 
-      />
-    );
+  const handleLoginSuccess = () => {
+    setIsAuth(true);
+    setView('member');
   };
+
+  if (loading) return <Loader />;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {currentView !== 'admin' && <Header currentView={currentView} setView={setView} />}
-      
-      <main className="flex-grow">
-        {currentView === 'home' && (
-          <>
-            <Hero onShopClick={navigateToShop} />
-            <About />
-            <Collections 
-              products={products}
-              onProductClick={handleProductClick} 
-              onViewAllClick={navigateToShop} 
-            />
-            <SignatureBouquets />
-            <WhyChoose />
-            <Gallery />
-            <Testimonials />
-            <Contact />
-          </>
-        )}
-        
-        {currentView === 'shop' && (
-          <Shop 
-            products={products}
-            onProductClick={handleProductClick} 
-          />
-        )}
-
-        {currentView === 'product' && selectedProduct && (
-          <ProductDetail 
-            product={selectedProduct} 
-            allProducts={products}
-            onBack={navigateToShop} 
-            onRelatedProductClick={handleProductClick}
-          />
-        )}
-
-        {currentView === 'admin' && renderAdminSection()}
-      </main>
-      
-      {currentView !== 'admin' && <Footer onAdminClick={() => setView('admin')} />}
-    </div>
+    <MainLayout currentView={view} setView={v => navigate(v)} isLoggedIn={isAuth}>
+      <Suspense fallback={<Loader />}>
+        {view === 'home' && <Home products={products} onNavigate={navigate} />}
+        {view === 'shop' && <ShopPage products={products} onProductClick={p => navigate('product', p)} />}
+        {view === 'product' && selectedProduct && <ProductDetail product={selectedProduct} onBack={() => navigate('shop')} />}
+        {view === 'member' && (isAuth ? <MemberPage onLogout={handleLogout} /> : <Login onLoginSuccess={handleLoginSuccess} onCancel={() => setView('home')} />)}
+        {view === 'login' && <Login onLoginSuccess={handleLoginSuccess} onCancel={() => setView('home')} />}
+      </Suspense>
+      {view !== 'login' && <ChatBox />}
+    </MainLayout>
   );
 }
 
