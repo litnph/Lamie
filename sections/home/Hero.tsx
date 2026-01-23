@@ -26,7 +26,7 @@ export const Hero: React.FC<{ onShopClick: () => void }> = ({ onShopClick }) => 
       </FadeIn>
       <FadeIn delay={400} className="relative flex justify-center order-1 md:order-2">
         <div className="rounded-lg overflow-hidden border-[8px] border-white shadow-2xl aspect-[3/4] w-full max-w-md bg-cream-100">
-          <img src="https://picsum.photos/id/106/800/1200" className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-110" />
+          <img src="https://picsum.photos/id/106/800/1200" alt="Lamie Signature Flower Arrangement" className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-110" />
         </div>
         <div className="absolute -bottom-8 -right-4 w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-lg border border-cream-200 animate-float">
            <div className="text-center">

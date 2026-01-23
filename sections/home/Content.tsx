@@ -15,7 +15,7 @@ export const About: React.FC = () => (
       </FadeIn>
       <FadeIn delay={200} className="order-1 md:order-2">
         <div className="relative p-4 border border-mocha-100 rounded-lg">
-          <img src="https://public.readdy.ai/ai/img_res/31107d7838c235c0a0448ed48724ad1c.jpg" className="w-full rounded shadow-sm" />
+          <img src="https://public.readdy.ai/ai/img_res/31107d7838c235c0a0448ed48724ad1c.jpg" alt="Florist arranging flowers at Lamie shop" className="w-full rounded shadow-sm" />
         </div>
       </FadeIn>
     </div>
