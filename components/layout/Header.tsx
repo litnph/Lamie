@@ -13,27 +13,25 @@ export const Header: React.FC<HeaderProps> = ({ currentView, setView, isLoggedIn
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Home', action: () => handleHomeScroll('home') },
-    { label: 'Shop', action: () => setView('shop'), isActive: currentView === 'shop' },
-    { label: 'Story', action: () => handleHomeScroll('about') },
-    { label: 'Gallery', action: () => handleHomeScroll('gallery') },
-    { label: 'Contact', action: () => handleHomeScroll('contact') },
+    { 
+      label: 'Home', 
+      action: () => {
+        setIsMobileMenuOpen(false);
+        setView('home');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 
+      isActive: currentView === 'home' 
+    },
+    { 
+      label: 'Shop', 
+      action: () => {
+        setIsMobileMenuOpen(false);
+        setView('shop');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 
+      isActive: currentView === 'shop' 
+    },
   ];
-
-  const handleHomeScroll = (elementId: string) => {
-    setIsMobileMenuOpen(false);
-    if (currentView !== 'home') {
-      setView('home');
-      // Allow time for render before scrolling
-      setTimeout(() => {
-        const el = document.getElementById(elementId);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      const el = document.getElementById(elementId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${currentView === 'home' ? 'bg-white/80 backdrop-blur-md border-b border-transparent' : 'bg-white border-b border-cream-200'}`}>
@@ -49,7 +47,10 @@ export const Header: React.FC<HeaderProps> = ({ currentView, setView, isLoggedIn
         {/* Logo */}
         <div 
           className="flex items-center gap-2 cursor-pointer group" 
-          onClick={() => handleHomeScroll('home')}
+          onClick={() => {
+            setView('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
         >
           <LamieLogoIcon className="w-10 h-10 text-mocha-800 transition-transform group-hover:rotate-12" />
           <span className="font-serif text-2xl tracking-wide text-mocha-900">Lamie</span>

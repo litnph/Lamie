@@ -26,7 +26,7 @@ const Home: React.FC<HomeProps> = ({ products, onNavigate }) => {
           }
         });
       },
-      { threshold: 0.3 } // Trigger when 30% visible
+      { threshold: 0.3 }
     );
 
     SECTIONS.forEach((id) => {
