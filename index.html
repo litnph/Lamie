@@ -69,6 +69,28 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #8C7B70;
       }
+      @keyframes filmTrack {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .animate-film-track {
+        animation: filmTrack 52s linear infinite;
+      }
+      .animate-film-track-delay {
+        animation: filmTrack 62s linear infinite;
+        animation-delay: -18s;
+      }
+      .animate-film-track-slow {
+        animation: filmTrack 72s linear infinite;
+        animation-delay: -32s;
+      }
+      .animate-gallery-marquee {
+        animation: filmTrack 96s linear infinite;
+      }
     </style>
   <script type="importmap">
 {

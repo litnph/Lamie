@@ -12,16 +12,16 @@ export const Footer: React.FC = () => (
             <span className="font-serif text-2xl">Lamie</span>
           </div>
           <p className="font-body text-sm text-mocha-100 leading-relaxed">
-            Bringing the gentle beauty of nature into every living space, with appreciation and meticulous attention to detail.
+            Lamie blends modern minimalism with a poetic, vintage touch so each bouquet feels gentle, elegant, and memorable.
           </p>
         </div>
         
         <div>
           <h4 className="font-serif text-lg mb-6 text-white">Contact</h4>
           <ul className="space-y-4 font-body text-sm text-mocha-100">
-            <li>123 Flower Road, District 1, HCMC</li>
-            <li>hello@lamieflower.vn</li>
-            <li>090 123 4567</li>
+            <li>Hotline: 0906 445 004</li>
+            <li>Instagram / TikTok: @tiemhoalamie</li>
+            <li>Delivery: All Ho Chi Minh City</li>
           </ul>
         </div>
 
@@ -38,17 +38,24 @@ export const Footer: React.FC = () => (
         <div>
           <h4 className="font-serif text-lg mb-6 text-white">Opening Hours</h4>
           <ul className="space-y-4 font-body text-sm text-mocha-100">
-            <li>Mon - Fri: 08:00 - 20:00</li>
-            <li>Sat - Sun: 09:00 - 21:00</li>
+            <li>Mon - Sun: 08:00 - 21:00</li>
+            <li>Online support daily</li>
           </ul>
         </div>
       </div>
       
-      <div className="border-t border-mocha-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-mocha-300 font-body uppercase tracking-widest">
-        <p>&copy; 2024 Lamie Flower Shop. All rights reserved.</p>
-        <div className="flex gap-6 mt-4 md:mt-0">
+      <div className="border-t border-mocha-800 pt-8 space-y-6">
+        <div className="text-center text-xs text-mocha-200 font-body leading-relaxed">
+          <p className="uppercase tracking-widest text-mocha-300 mb-2">Tiem Hoa Lamie - Lamie Flower Shop</p>
+          <p>MT Eastmark City, phuong Long Truong, TP. Thu Duc, TP.HCM</p>
+          <p>Giao hoa tan noi toan TP.HCM</p>
+        </div>
+        <div className="flex flex-col md:flex-row justify-between items-center text-xs text-mocha-300 font-body uppercase tracking-widest">
+          <p>&copy; 2026 Lamie Flower Shop. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
           <span>Facebook</span>
           <span>Instagram</span>
+          </div>
         </div>
       </div>
     </div>
