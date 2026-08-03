@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LamieLogoIcon, Button, LeafIcon } from './Base';
+import { LamieLogoIcon, Button } from './Base';
 
 interface HeaderProps {
   currentView: 'home' | 'shop' | 'product' | 'admin';

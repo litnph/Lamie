@@ -1,10 +1,11 @@
 
 import React from 'react';
+import { PageContainer } from './PageContainer';
 
 export const SectionWrapper: React.FC<{ children: React.ReactNode; id?: string; className?: string; noPadding?: boolean }> = ({ children, id, className = "", noPadding = false }) => (
-  <section id={id} className={`relative overflow-hidden w-full ${noPadding ? '' : 'py-20 md:py-32'} ${className}`}>
-    <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+  <section id={id} className={`relative w-full overflow-hidden ${noPadding ? '' : 'lamie-section-space'} ${className}`}>
+    <PageContainer className="relative z-10">
       {children}
-    </div>
+    </PageContainer>
   </section>
 );

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { FadeIn } from '../components/ui/FadeIn';
 import { Button } from '../components/common/Button';
 import { LamieLogoIcon } from '../components/common/Icons';
+import { Card } from '../components/ui/Card';
+import { TextField } from '../components/ui/FormControls';
 
 export const Login: React.FC<{ onLoginSuccess: () => void, onCancel: () => void }> = ({ onLoginSuccess, onCancel }) => {
   const [email, setEmail] = useState('');
@@ -25,7 +27,8 @@ export const Login: React.FC<{ onLoginSuccess: () => void, onCancel: () => void 
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-cream-200 rounded-full opacity-30 blur-2xl"></div>
       </div>
 
-      <FadeIn className="bg-white/80 backdrop-blur-lg p-12 rounded-2xl shadow-xl border border-white w-full max-w-md relative z-10">
+      <FadeIn className="w-full max-w-md relative z-10">
+        <Card surface="raised" padding="lg">
         <div className="flex flex-col items-center mb-10">
           <LamieLogoIcon className="w-16 h-16 text-mocha-800 mb-6" />
           <h2 className="font-serif text-3xl text-mocha-900">Welcome Back</h2>
@@ -33,16 +36,12 @@ export const Login: React.FC<{ onLoginSuccess: () => void, onCancel: () => void 
         </div>
         
         <form onSubmit={submit} className="space-y-6">
+          <TextField id="login-email" label="Email address" type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="hello@example.com" required />
           <div className="space-y-2">
-             <label className="text-[10px] uppercase tracking-widest text-mocha-300 font-bold">Email Address</label>
-             <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full border-b border-cream-200 py-3 focus:outline-none focus:border-mocha-500 bg-transparent font-body text-mocha-800" placeholder="hello@example.com" required />
-          </div>
-          <div className="space-y-2">
-             <div className="flex justify-between">
-                <label className="text-[10px] uppercase tracking-widest text-mocha-300 font-bold">Password</label>
+             <div className="flex justify-end">
                 <a href="#" className="text-[10px] text-mocha-400 hover:text-mocha-800 italic">Forgot?</a>
              </div>
-             <input type="password" value={pass} onChange={e => setPass(e.target.value)} className="w-full border-b border-cream-200 py-3 focus:outline-none focus:border-mocha-500 bg-transparent font-body" required />
+             <TextField id="login-password" label="Password" type="password" autoComplete="current-password" value={pass} onChange={e => setPass(e.target.value)} required />
           </div>
           
           <div className="flex flex-col gap-4 pt-4">
@@ -53,6 +52,7 @@ export const Login: React.FC<{ onLoginSuccess: () => void, onCancel: () => void 
              <button type="button" onClick={onCancel} className="mt-4 text-[10px] uppercase tracking-widest text-mocha-300 hover:text-mocha-800 transition-colors">Return to Shop</button>
           </div>
         </form>
+        </Card>
       </FadeIn>
     </div>
   );

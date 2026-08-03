@@ -1,91 +1,188 @@
-
 import React from 'react';
-import { SectionWrapper } from '../components/ui/SectionWrapper';
-import { Button } from '../components/common/Button';
+import { AccountSidebar } from '../components/layout/AccountSidebar';
+import { LeafIcon } from '../components/common/Icons';
+import { Card } from '../components/ui/Card';
 import { FadeIn } from '../components/ui/FadeIn';
+import { SectionWrapper } from '../components/ui/SectionWrapper';
 
-const MOCK_ORDERS = [
+interface MemberOrder {
+  id: string;
+  date: string;
+  status: 'Delivered' | 'Processing';
+  items: string;
+  total: string;
+}
+
+interface MemberPageProps {
+  onLogout: () => void;
+  orders?: MemberOrder[];
+  isLoading?: boolean;
+  error?: string | null;
+}
+
+const MOCK_ORDERS: MemberOrder[] = [
   { id: '#L9081', date: 'Oct 24, 2024', status: 'Delivered', items: 'Vintage Rose Bouquet', total: '650.000₫' },
   { id: '#L9112', date: 'Nov 02, 2024', status: 'Processing', items: 'Morning Dew (x2)', total: '900.000₫' },
 ];
 
-export const MemberPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
-  return (
-    <div className="pt-32 min-h-screen pb-20 bg-cream-50">
-      <SectionWrapper>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          {/* Sidebar */}
-          <div className="md:col-span-3 space-y-8">
-            <div className="text-center md:text-left">
-              <div className="w-20 h-20 bg-mocha-200 rounded-full mx-auto md:mx-0 mb-4 overflow-hidden">
-                <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="User" className="w-full h-full object-cover" />
-              </div>
-              <h2 className="font-serif text-2xl text-mocha-900">Sophie Lenoir</h2>
-              <p className="text-sm text-mocha-400 font-body">Member since 2023</p>
-            </div>
-            
-            <nav className="flex flex-col gap-2 border-t border-cream-200 pt-6">
-              {['Dashboard', 'My Orders', 'Addresses', 'Wishlist', 'Account Details'].map((item, i) => (
-                <button key={item} className={`text-left py-2 px-4 rounded text-sm font-body transition-colors ${i === 0 ? 'bg-mocha-800 text-white' : 'text-mocha-500 hover:bg-cream-100'}`}>
-                  {item}
-                </button>
-              ))}
-              <button onClick={onLogout} className="text-left py-2 px-4 rounded text-sm font-body text-red-400 hover:bg-red-50 mt-4">
-                Logout
-              </button>
-            </nav>
-          </div>
+const metrics = [
+  { label: 'Total orders', value: '12', detail: 'Since joining' },
+  { label: 'Wishlist', value: '5', detail: 'Saved arrangements' },
+  { label: 'Reward points', value: '450', detail: 'Available balance' },
+];
 
-          {/* Main Content */}
-          <div className="md:col-span-9">
-            <FadeIn>
-              <h1 className="font-serif text-3xl text-mocha-900 mb-2">Hello, Sophie!</h1>
-              <p className="font-body text-mocha-500 mb-10">From your account dashboard you can view your recent orders, manage your shipping and billing addresses.</p>
+const statusStyles: Record<MemberOrder['status'], string> = {
+  Delivered: 'bg-[var(--color-success-bg)] text-[var(--color-success-text)]',
+  Processing: 'bg-[var(--color-warning-bg)] text-[var(--color-warning-text)]',
+};
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                 <div className="bg-white p-6 rounded-lg border border-cream-200 shadow-sm">
-                    <span className="text-xs uppercase tracking-widest text-mocha-300">Total Orders</span>
-                    <div className="text-4xl font-serif text-mocha-900 mt-2">12</div>
-                 </div>
-                 <div className="bg-white p-6 rounded-lg border border-cream-200 shadow-sm">
-                    <span className="text-xs uppercase tracking-widest text-mocha-300">Wishlist</span>
-                    <div className="text-4xl font-serif text-mocha-900 mt-2">5</div>
-                 </div>
-                 <div className="bg-white p-6 rounded-lg border border-cream-200 shadow-sm">
-                    <span className="text-xs uppercase tracking-widest text-mocha-300">Reward Points</span>
-                    <div className="text-4xl font-serif text-mocha-900 mt-2">450</div>
-                 </div>
-              </div>
-
-              <h3 className="font-serif text-xl text-mocha-900 mb-6">Recent Orders</h3>
-              <div className="bg-white rounded-lg border border-cream-200 overflow-hidden">
-                <table className="w-full text-left font-body text-sm">
-                  <thead className="bg-cream-100 text-mocha-400 uppercase text-[10px] tracking-widest">
-                    <tr>
-                      <th className="p-4 font-normal">Order</th>
-                      <th className="p-4 font-normal">Date</th>
-                      <th className="p-4 font-normal">Status</th>
-                      <th className="p-4 font-normal">Total</th>
-                      <th className="p-4 font-normal">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-cream-100">
-                    {MOCK_ORDERS.map(order => (
-                      <tr key={order.id} className="hover:bg-cream-50 transition-colors">
-                        <td className="p-4 font-bold text-mocha-800">{order.id}</td>
-                        <td className="p-4 text-mocha-500">{order.date}</td>
-                        <td className="p-4"><span className={`px-2 py-1 rounded text-[10px] uppercase font-bold ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{order.status}</span></td>
-                        <td className="p-4 text-mocha-800">{order.total}</td>
-                        <td className="p-4"><button className="text-mocha-800 underline hover:text-mocha-500">View</button></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </SectionWrapper>
+const DashboardSkeleton: React.FC = () => (
+  <div aria-label="Loading account dashboard" role="status" className="animate-pulse space-y-10">
+    <span className="sr-only">Loading account dashboard</span>
+    <div aria-hidden="true" className="space-y-3">
+      <div className="h-10 w-52 rounded-[var(--radius-sm)] bg-[var(--color-surface-subtle)]" />
+      <div className="h-5 w-full max-w-xl rounded-[var(--radius-sm)] bg-[var(--color-surface-subtle)]" />
     </div>
+    <div aria-hidden="true" className="grid overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border-subtle)] sm:grid-cols-3">
+      {[0, 1, 2].map((item) => (
+        <div key={item} className="space-y-3 border-b border-[var(--color-border-subtle)] p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+          <div className="h-4 w-24 rounded bg-[var(--color-surface-subtle)]" />
+          <div className="h-9 w-16 rounded bg-[var(--color-surface-subtle)]" />
+        </div>
+      ))}
+    </div>
+    <div aria-hidden="true" className="space-y-3">
+      {[0, 1, 2].map((item) => <div key={item} className="h-16 rounded-[var(--radius-sm)] bg-[var(--color-surface-subtle)]" />)}
+    </div>
+  </div>
+);
+
+const EmptyOrders: React.FC = () => (
+  <Card surface="subtle" padding="lg" className="text-center">
+    <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-surface)] text-[var(--color-text-accent)]" aria-hidden="true">
+      <LeafIcon className="h-6 w-6" />
+    </div>
+    <h3 className="font-serif text-2xl text-[var(--color-text-primary)]">No orders yet</h3>
+    <p className="mx-auto mt-2 max-w-md text-sm text-[var(--color-text-muted)]">Your orders will appear here after you choose your first arrangement.</p>
+  </Card>
+);
+
+const OrderStatus: React.FC<{ status: MemberOrder['status'] }> = ({ status }) => (
+  <span className={`inline-flex min-h-7 items-center rounded-[var(--radius-pill)] px-3 text-xs font-medium ${statusStyles[status]}`}>
+    {status}
+  </span>
+);
+
+const DashboardError: React.FC<{ message: string }> = ({ message }) => (
+  <Card surface="outlined" padding="lg" role="alert" className="border-[var(--color-danger-text)]">
+    <h2 className="font-serif text-2xl text-[var(--color-text-primary)]">Account details unavailable</h2>
+    <p className="mt-2 max-w-xl text-sm text-[var(--color-text-secondary)]">{message}</p>
+  </Card>
+);
+
+const Orders: React.FC<{ orders: MemberOrder[] }> = ({ orders }) => {
+  if (orders.length === 0) return <EmptyOrders />;
+
+  return (
+    <>
+      <div className="space-y-3 xl:hidden">
+        {orders.map((order) => (
+          <Card key={order.id} surface="outlined" padding="md" className="space-y-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="lamie-tabular text-sm font-semibold text-[var(--color-text-primary)]">{order.id}</p>
+                <p className="mt-1 text-xs text-[var(--color-text-muted)]">{order.date}</p>
+              </div>
+              <OrderStatus status={order.status} />
+            </div>
+            <div>
+              <p className="text-sm text-[var(--color-text-secondary)]">{order.items}</p>
+              <p className="lamie-tabular mt-1 font-medium text-[var(--color-text-primary)]">{order.total}</p>
+            </div>
+            <button type="button" className="min-h-11 text-sm font-medium text-[var(--color-text-primary)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--color-text-accent)]">
+              View order
+            </button>
+          </Card>
+        ))}
+      </div>
+
+      <div className="hidden overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] xl:block">
+        <table className="w-full table-fixed text-left text-sm">
+          <caption className="sr-only">Recent orders</caption>
+          <thead className="bg-[var(--color-surface-subtle)] text-xs text-[var(--color-text-muted)]">
+            <tr>
+              <th scope="col" className="w-[16%] px-5 py-4 font-medium">Order</th>
+              <th scope="col" className="w-[18%] px-5 py-4 font-medium">Date</th>
+              <th scope="col" className="w-[27%] px-5 py-4 font-medium">Arrangement</th>
+              <th scope="col" className="w-[17%] px-5 py-4 font-medium">Status</th>
+              <th scope="col" className="w-[14%] px-5 py-4 text-right font-medium">Total</th>
+              <th scope="col" className="w-[8%] px-5 py-4"><span className="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[var(--color-border-subtle)]">
+            {orders.map((order) => (
+              <tr key={order.id} className="transition-colors duration-[var(--duration-fast)] hover:bg-[var(--color-canvas)]">
+                <th scope="row" className="lamie-tabular px-5 py-5 font-semibold text-[var(--color-text-primary)]">{order.id}</th>
+                <td className="px-5 py-5 text-[var(--color-text-muted)]">{order.date}</td>
+                <td className="truncate px-5 py-5 text-[var(--color-text-secondary)]" title={order.items}>{order.items}</td>
+                <td className="px-5 py-5"><OrderStatus status={order.status} /></td>
+                <td className="lamie-tabular px-5 py-5 text-right font-medium text-[var(--color-text-primary)]">{order.total}</td>
+                <td className="px-5 py-5 text-right">
+                  <button type="button" aria-label={`View order ${order.id}`} className="min-h-11 rounded-[var(--radius-sm)] px-2 text-sm font-medium text-[var(--color-text-primary)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--color-text-accent)]">
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
+
+export const MemberPage: React.FC<MemberPageProps> = ({ onLogout, orders = MOCK_ORDERS, isLoading = false, error = null }) => (
+  <div className="min-h-screen bg-[var(--color-canvas)] pb-20 pt-32">
+    <SectionWrapper className="lamie-section-space--compact" noPadding>
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-[var(--space-grid)]">
+        <AccountSidebar onLogout={onLogout} />
+
+        <div className="min-w-0 lg:col-span-9" aria-busy={isLoading}>
+          {isLoading ? (
+            <DashboardSkeleton />
+          ) : error ? (
+            <DashboardError message={error} />
+          ) : (
+            <FadeIn>
+              <header className="mb-10 border-b border-[var(--color-border-subtle)] pb-8">
+                <h1 className="font-serif text-4xl leading-tight text-[var(--color-text-primary)] sm:text-5xl">Welcome back, Sophie</h1>
+                <p className="mt-4 max-w-2xl text-[var(--color-text-secondary)]">Review recent orders, saved arrangements, delivery addresses, and account details.</p>
+              </header>
+
+              <dl className="mb-12 grid overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] sm:grid-cols-3">
+                {metrics.map((metric) => (
+                  <div key={metric.label} className="border-b border-[var(--color-border-subtle)] p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+                    <dt className="text-sm text-[var(--color-text-muted)]">{metric.label}</dt>
+                    <dd className="lamie-tabular mt-2 font-serif text-4xl leading-none text-[var(--color-text-primary)]">{metric.value}</dd>
+                    <p className="mt-3 text-xs text-[var(--color-text-muted)]">{metric.detail}</p>
+                  </div>
+                ))}
+              </dl>
+
+              <section aria-labelledby="recent-orders-heading">
+                <div className="mb-6 flex items-end justify-between gap-4">
+                  <div>
+                    <h2 id="recent-orders-heading" className="font-serif text-2xl text-[var(--color-text-primary)] sm:text-3xl">Recent orders</h2>
+                    <p className="mt-1 text-sm text-[var(--color-text-muted)]">Your latest Lamie purchases and their current status.</p>
+                  </div>
+                  {orders.length > 0 ? <span className="lamie-tabular shrink-0 text-sm text-[var(--color-text-muted)]">{orders.length} shown</span> : null}
+                </div>
+                <Orders orders={orders} />
+              </section>
+            </FadeIn>
+          )}
+        </div>
+      </div>
+    </SectionWrapper>
+  </div>
+);

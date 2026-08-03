@@ -1,7 +1,9 @@
-
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ViewState } from '../../types/common';
 import { LamieLogoIcon } from '../common/Icons';
+import { PageContainer } from '../ui/PageContainer';
+import { MobileMenu } from './MobileMenu';
+import { PrimaryNavigation } from './Navigation';
 
 interface HeaderProps {
   currentView: ViewState;
@@ -9,110 +11,90 @@ interface HeaderProps {
   isLoggedIn: boolean;
 }
 
+const IconButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ className = '', ...props }) => (
+  <button
+    type="button"
+    className={`inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] text-[var(--color-text-primary)] transition-[color,background-color,transform] duration-[var(--duration-fast)] hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-text-accent)] active:translate-y-px ${className}`}
+    {...props}
+  />
+);
+
 export const Header: React.FC<HeaderProps> = ({ currentView, setView, isLoggedIn }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { 
-      label: 'Home', 
-      action: () => {
-        setIsMobileMenuOpen(false);
-        setView('home');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 
-      isActive: currentView === 'home' 
-    },
-    { 
-      label: 'Shop', 
-      action: () => {
-        setIsMobileMenuOpen(false);
-        setView('shop');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 
-      isActive: currentView === 'shop' 
-    },
-  ];
+  const navigate = useCallback((view: ViewState) => {
+    setIsMobileMenuOpen(false);
+    setView(view);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [setView]);
+
+  const accountView: ViewState = isLoggedIn ? 'member' : 'login';
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${currentView === 'home' ? 'bg-white/80 backdrop-blur-md border-b border-transparent' : 'bg-white border-b border-cream-200'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-        
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-mocha-900" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 12h18M3 6h18M3 18h18" />
-          </svg>
-        </button>
-
-        {/* Logo */}
-        <div 
-          className="flex items-center gap-2 cursor-pointer group" 
-          onClick={() => {
-            setView('home');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          <LamieLogoIcon className="w-10 h-10 text-mocha-800 transition-transform group-hover:rotate-12" />
-          <span className="font-serif text-2xl tracking-wide text-mocha-900">Lamie</span>
-        </div>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={item.action}
-              className={`text-sm uppercase tracking-widest font-bold transition-colors ${
-                item.isActive ? 'text-mocha-900 border-b border-mocha-900' : 'text-mocha-400 hover:text-mocha-800'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        {/* Actions */}
-        <div className="flex items-center gap-6">
-          <button 
-            onClick={() => setView('shop')}
-            className="text-mocha-900 hover:text-mocha-500 transition-colors relative"
+    <>
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-[var(--color-border-subtle)] bg-[color:rgb(255_254_250/0.9)] backdrop-blur-xl">
+        <PageContainer size="wide" className="grid h-20 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
+          <button
+            type="button"
+            onClick={() => navigate('home')}
+            className="group flex w-fit items-center gap-3 rounded-[var(--radius-sm)] text-left"
+            aria-label="Lamie home"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            <span className="absolute -top-1 -right-2 bg-mocha-800 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">2</span>
+            <LamieLogoIcon className="h-10 w-10 text-[var(--color-action-primary)] transition-transform duration-[var(--duration-slow)] ease-[var(--ease-enter)] group-hover:rotate-6" />
+            <span className="flex flex-col">
+              <span className="font-serif text-2xl leading-none tracking-[-0.025em] text-[var(--color-text-primary)]">Lamie</span>
+              <span className="mt-1 hidden text-[10px] tracking-[0.16em] text-[var(--color-text-muted)] sm:block">Flower shop</span>
+            </span>
           </button>
-          
-          <button 
-            onClick={() => setView(isLoggedIn ? 'member' : 'login')}
-            className="text-mocha-900 hover:text-mocha-500 transition-colors flex items-center gap-2"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            {isLoggedIn && <span className="hidden md:inline text-xs font-bold uppercase tracking-wide">My Account</span>}
-          </button>
-        </div>
-      </div>
 
-      {/* Mobile Menu Overlay */}
-      <div className={`md:hidden fixed inset-0 z-50 bg-white transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-6 flex justify-between items-center border-b border-cream-200">
-          <span className="font-serif text-2xl text-mocha-900">Menu</span>
-          <button onClick={() => setIsMobileMenuOpen(false)}>✕</button>
-        </div>
-        <nav className="p-6 flex flex-col gap-6">
-          {navItems.map((item, idx) => (
+          <PrimaryNavigation currentView={currentView} onNavigate={navigate} className="hidden md:flex" />
+
+          <div className="flex items-center justify-end gap-1 sm:gap-2">
+            <IconButton onClick={() => navigate('shop')} aria-label="Open flower shop" className="relative">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-[var(--radius-pill)] bg-[var(--color-action-primary)] px-1 text-[9px] leading-none text-[var(--color-text-on-strong)]">2</span>
+            </IconButton>
+
             <button
-              key={idx}
-              onClick={item.action}
-              className="text-left font-serif text-2xl text-mocha-900"
+              type="button"
+              onClick={() => navigate(accountView)}
+              className="hidden min-h-11 items-center gap-2 rounded-[var(--radius-sm)] px-3 text-sm text-[var(--color-text-primary)] transition-colors duration-[var(--duration-fast)] hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-text-accent)] sm:flex"
+              aria-label={isLoggedIn ? 'Open my account' : 'Log in or register'}
             >
-              {item.label}
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span className="hidden lg:inline">{isLoggedIn ? 'My account' : 'Sign in'}</span>
             </button>
-          ))}
-          <div className="h-[1px] bg-cream-200 w-full my-2"></div>
-          <button onClick={() => { setIsMobileMenuOpen(false); setView(isLoggedIn ? 'member' : 'login'); }} className="text-left font-serif text-2xl text-mocha-900">
-            {isLoggedIn ? 'My Account' : 'Login / Register'}
-          </button>
-        </nav>
-      </div>
-    </header>
+
+            <IconButton
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
+              className="md:hidden"
+            >
+              <span aria-hidden="true" className="flex w-5 flex-col gap-1.5">
+                <span className="h-px w-full bg-current" />
+                <span className="h-px w-3/4 self-end bg-current" />
+              </span>
+            </IconButton>
+          </div>
+        </PageContainer>
+      </header>
+
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        currentView={currentView}
+        isLoggedIn={isLoggedIn}
+        onClose={() => setIsMobileMenuOpen(false)}
+        onNavigate={navigate}
+      />
+    </>
   );
 };
