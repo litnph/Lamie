@@ -4,6 +4,7 @@ import { LeafIcon } from '../components/common/Icons';
 import { Card } from '../components/ui/Card';
 import { FadeIn } from '../components/ui/FadeIn';
 import { SectionWrapper } from '../components/ui/SectionWrapper';
+import { formatDisplayDate, formatVndCurrency } from '../utils/displayFormatters';
 
 interface MemberOrder {
   id: string;
@@ -21,8 +22,8 @@ interface MemberPageProps {
 }
 
 const MOCK_ORDERS: MemberOrder[] = [
-  { id: '#L9081', date: 'Oct 24, 2024', status: 'Delivered', items: 'Vintage Rose Bouquet', total: '650.000₫' },
-  { id: '#L9112', date: 'Nov 02, 2024', status: 'Processing', items: 'Morning Dew (x2)', total: '900.000₫' },
+  { id: '#L9081', date: '2024-10-24', status: 'Delivered', items: 'Vintage Rose Bouquet', total: '650.000₫' },
+  { id: '#L9112', date: '2024-11-02', status: 'Processing', items: 'Morning Dew (x2)', total: '900.000₫' },
 ];
 
 const metrics = [
@@ -91,13 +92,13 @@ const Orders: React.FC<{ orders: MemberOrder[] }> = ({ orders }) => {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="lamie-tabular text-sm font-semibold text-[var(--color-text-primary)]">{order.id}</p>
-                <p className="mt-1 text-xs text-[var(--color-text-muted)]">{order.date}</p>
+                <p className="mt-1 text-xs text-[var(--color-text-muted)]">{formatDisplayDate(order.date)}</p>
               </div>
               <OrderStatus status={order.status} />
             </div>
             <div>
               <p className="text-sm text-[var(--color-text-secondary)]">{order.items}</p>
-              <p className="lamie-tabular mt-1 font-medium text-[var(--color-text-primary)]">{order.total}</p>
+              <p className="lamie-tabular mt-1 font-medium text-[var(--color-text-primary)]">{formatVndCurrency(order.total)}</p>
             </div>
             <button type="button" className="min-h-11 text-sm font-medium text-[var(--color-text-primary)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--color-text-accent)]">
               View order
@@ -123,10 +124,10 @@ const Orders: React.FC<{ orders: MemberOrder[] }> = ({ orders }) => {
             {orders.map((order) => (
               <tr key={order.id} className="transition-colors duration-[var(--duration-fast)] hover:bg-[var(--color-canvas)]">
                 <th scope="row" className="lamie-tabular px-5 py-5 font-semibold text-[var(--color-text-primary)]">{order.id}</th>
-                <td className="px-5 py-5 text-[var(--color-text-muted)]">{order.date}</td>
+                <td className="px-5 py-5 text-[var(--color-text-muted)]">{formatDisplayDate(order.date)}</td>
                 <td className="truncate px-5 py-5 text-[var(--color-text-secondary)]" title={order.items}>{order.items}</td>
                 <td className="px-5 py-5"><OrderStatus status={order.status} /></td>
-                <td className="lamie-tabular px-5 py-5 text-right font-medium text-[var(--color-text-primary)]">{order.total}</td>
+                <td className="lamie-tabular px-5 py-5 text-right font-medium text-[var(--color-text-primary)]">{formatVndCurrency(order.total)}</td>
                 <td className="px-5 py-5 text-right">
                   <button type="button" aria-label={`View order ${order.id}`} className="min-h-11 rounded-[var(--radius-sm)] px-2 text-sm font-medium text-[var(--color-text-primary)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--color-text-accent)]">
                     View

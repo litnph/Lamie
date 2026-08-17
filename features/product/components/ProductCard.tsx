@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { FlowerProduct } from '../product.type';
+import { formatVndCurrency } from '@/utils/displayFormatters';
 
 interface ProductCardProps {
   product: FlowerProduct;
@@ -22,7 +23,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) =>
     </div>
     <div className="text-center">
       <h3 className="font-serif text-lg text-mocha-900 group-hover:text-mocha-500 transition-colors">{product.name}</h3>
-      <p className="font-body text-sm text-mocha-300">{product.price}</p>
+      <p className="font-body text-sm text-mocha-300">{formatVndCurrency(product.price)}</p>
     </div>
   </div>
 );

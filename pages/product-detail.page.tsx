@@ -5,6 +5,7 @@ import { SectionWrapper } from '../components/ui/SectionWrapper';
 import { Button } from '../components/common/Button';
 import { LeafIcon } from '../components/common/Icons';
 import { ProductGallery } from '../features/product/components/ProductGallery';
+import { formatVndCurrency } from '../utils/displayFormatters';
 
 export const ProductDetail: React.FC<{ product: FlowerProduct, onBack: () => void }> = ({ product, onBack }) => {
   const [qty, setQty] = useState(1);
@@ -25,7 +26,7 @@ export const ProductDetail: React.FC<{ product: FlowerProduct, onBack: () => voi
           <div className="flex flex-col justify-center space-y-8">
              <span className="text-xs uppercase tracking-widest text-mocha-300 font-bold">{product.category}</span>
              <h1 className="font-serif text-5xl text-mocha-900 leading-tight">{product.name}</h1>
-             <p className="text-3xl text-mocha-400 italic font-body">{product.price}</p>
+             <p className="text-3xl text-mocha-400 italic font-body">{formatVndCurrency(product.price)}</p>
              <div className="h-[1px] w-full bg-cream-200"></div>
              <p className="font-body text-mocha-600 text-lg leading-relaxed">{product.description}</p>
              

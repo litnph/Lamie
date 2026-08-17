@@ -3,6 +3,7 @@ import React from 'react';
 import { FlowerProduct } from '../features/product/product.type';
 import { SectionWrapper } from '../components/ui/SectionWrapper';
 import { Button } from '../components/common/Button';
+import { formatVndCurrency } from '../utils/displayFormatters';
 
 const AdminPage: React.FC<{ products: FlowerProduct[], onLogout: () => void }> = ({ products, onLogout }) => (
   <div className="pt-32 min-h-screen pb-20">
@@ -31,7 +32,7 @@ const AdminPage: React.FC<{ products: FlowerProduct[], onLogout: () => void }> =
                 <td className="p-5"><img src={p.image} className="w-12 h-16 object-cover rounded" /></td>
                 <td className="p-5 font-serif text-mocha-900 text-lg">{p.name}</td>
                 <td className="p-5 text-sm text-mocha-500 uppercase tracking-tighter">{p.category}</td>
-                <td className="p-5 text-mocha-800">{p.price}</td>
+                <td className="p-5 text-mocha-800">{formatVndCurrency(p.price)}</td>
                 <td className="p-5"><button className="text-xs text-mocha-400 hover:text-mocha-800 uppercase font-bold">Edit</button></td>
               </tr>
             ))}
