@@ -1,29 +1,43 @@
-
 import React from 'react';
 import { FlowerProduct } from '../product.type';
 import { formatVndCurrency } from '@/utils/displayFormatters';
+import { ProductImage } from './ProductImage';
 
 interface ProductCardProps {
   product: FlowerProduct;
-  onClick?: (product: FlowerProduct) => void;
+  onClick: (product: FlowerProduct) => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => (
-  <div className="group cursor-pointer" onClick={() => onClick && onClick(product)}>
-    <div className="relative overflow-hidden rounded-md bg-white aspect-[3/4] mb-3">
-      <img 
-        src={product.image} 
-        alt={product.name} 
-        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-      />
-      <div className="absolute inset-0 bg-mocha-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-      <div className="absolute bottom-4 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 hidden md:block">
-        <span className="inline-block bg-white/95 backdrop-blur-sm px-4 py-2 rounded text-xs font-body tracking-widest text-mocha-800 shadow-sm">VIEW DETAILS</span>
-      </div>
-    </div>
-    <div className="text-center">
-      <h3 className="font-serif text-lg text-mocha-900 group-hover:text-mocha-500 transition-colors">{product.name}</h3>
-      <p className="font-body text-sm text-mocha-300">{formatVndCurrency(product.price)}</p>
-    </div>
-  </div>
-);
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
+  const displayPrice = product.salePrice ?? product.price;
+
+  return (
+    <article className="group min-w-0">
+      <button
+        type="button"
+        onClick={() => onClick(product)}
+        aria-label={`View ${product.name}`}
+        className="block w-full rounded-[var(--radius-md)] text-center transition-colors duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+      >
+        <div className="relative mb-3 aspect-[3/4] overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-surface)]">
+          <ProductImage
+            image={product.images[0]}
+            alt={product.images[0]?.alt || product.name}
+            className="h-full w-full object-cover transition-transform duration-[var(--duration-slow)] ease-[var(--ease-enter)] group-hover:scale-[1.035]"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-[var(--color-overlay)] opacity-0 transition-opacity duration-[var(--duration-base)] group-hover:opacity-10" />
+          <div aria-hidden="true" className="absolute inset-x-0 bottom-4 hidden translate-y-3 text-center opacity-0 transition-[transform,opacity] duration-[var(--duration-base)] group-hover:translate-y-0 group-hover:opacity-100 md:block">
+            <span className="inline-block rounded-[var(--radius-sm)] bg-[color:rgb(255_254_250/0.94)] px-4 py-2 text-xs font-medium tracking-[var(--tracking-label)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)]">View details</span>
+          </div>
+        </div>
+        <div>
+          <h3 className="line-clamp-2 min-h-[3.25rem] break-words font-serif text-lg leading-snug text-[var(--color-text-primary)] transition-colors duration-[var(--duration-fast)] group-hover:text-[var(--color-text-accent)]">{product.name}</h3>
+          <div className="lamie-tabular mt-1 flex flex-wrap items-baseline justify-center gap-2 text-sm">
+            <span className="text-[var(--color-text-secondary)]">{formatVndCurrency(displayPrice)}</span>
+            {product.salePrice !== null ? <span className="text-xs text-[var(--color-text-muted)] line-through">{formatVndCurrency(product.price)}</span> : null}
+          </div>
+        </div>
+      </button>
+    </article>
+  );
+};

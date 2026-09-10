@@ -1,29 +1,55 @@
-
 import React from 'react';
 import { SectionWrapper } from '../../components/ui/SectionWrapper';
 import { FadeIn } from '../../components/ui/FadeIn';
+import { CatalogStatePanel, ProductGridSkeleton } from '../../features/product/components/CatalogStates';
 import { ProductCard } from '../../features/product/components/ProductCard';
-import { FlowerProduct } from '../../features/product/product.type';
+import { CatalogState, FlowerProduct } from '../../features/product/product.type';
 
 type Lang = 'vi' | 'en';
 
-export const Collections: React.FC<{ lang: Lang; products: FlowerProduct[], onProductClick: (p: FlowerProduct) => void }> = ({ lang, products, onProductClick }) => (
+interface CollectionsProps {
+  lang: Lang;
+  catalog: CatalogState;
+  onRetry: () => void;
+  onViewAll: () => void;
+  onProductClick: (product: FlowerProduct) => void;
+}
+
+export const Collections: React.FC<CollectionsProps> = ({
+  lang,
+  catalog,
+  onRetry,
+  onViewAll,
+  onProductClick,
+}) => (
   <SectionWrapper id="collections">
-    <div className="flex justify-between items-end mb-16">
+    <div className="mb-12 flex flex-col items-start justify-between gap-6 sm:mb-16 sm:flex-row sm:items-end">
       <div>
-        <span className="text-xs uppercase tracking-widest text-mocha-300 font-bold block mb-2">{lang === 'vi' ? 'Tuyen chon' : 'Selected'}</span>
-        <h2 className="font-serif text-5xl text-mocha-900">{lang === 'vi' ? 'Bo suu tap Lamie' : 'Lamie Collections'}</h2>
+        <span className="mb-2 block text-xs font-semibold tracking-[var(--tracking-label)] text-[var(--color-text-muted)]">{lang === 'vi' ? 'Tuyen chon' : 'Selected'}</span>
+        <h2 className="font-serif text-4xl text-[var(--color-text-primary)] sm:text-5xl">{lang === 'vi' ? 'Bo suu tap Lamie' : 'Lamie collections'}</h2>
       </div>
-      <button className="text-sm font-bold text-mocha-800 underline uppercase tracking-widest hover:text-mocha-500 transition-colors">
+      <button type="button" onClick={onViewAll} className="min-h-11 rounded-[var(--radius-sm)] text-sm font-medium text-[var(--color-text-primary)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--color-text-accent)]">
         {lang === 'vi' ? 'Xem tat ca' : 'View all'}
       </button>
     </div>
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
-      {products.slice(0, 4).map((p, i) => (
-        <FadeIn key={p.id} delay={i * 100}>
-          <ProductCard product={p} onClick={onProductClick} />
-        </FadeIn>
-      ))}
-    </div>
+
+    {catalog.status === 'loading' ? (
+      <ProductGridSkeleton count={4} className="grid grid-cols-1 gap-8 min-[400px]:grid-cols-2 lg:grid-cols-4 lg:gap-10" />
+    ) : null}
+    {catalog.status === 'error' ? (
+      <CatalogStatePanel title={catalog.error.title} message={catalog.error.message} role="alert" compact onAction={onRetry} actionLabel="Try again" />
+    ) : null}
+    {catalog.status === 'empty' ? (
+      <CatalogStatePanel title="Fresh arrangements are on their way" message="Lamie has not published any flowers to the storefront yet." compact />
+    ) : null}
+    {catalog.status === 'ready' ? (
+      <div className="grid grid-cols-1 gap-8 min-[400px]:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+        {catalog.products.slice(0, 4).map((product, index) => (
+          <FadeIn key={product.id} delay={index * 70}>
+            <ProductCard product={product} onClick={onProductClick} />
+          </FadeIn>
+        ))}
+      </div>
+    ) : null}
   </SectionWrapper>
 );

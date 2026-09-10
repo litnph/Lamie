@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-labelledby="title description">
+  <title id="title">Lamie flower image fallback</title>
+  <desc id="description">A minimal line drawing of a flower arrangement on warm paper.</desc>
+  <rect width="600" height="800" fill="#f5f2e9"/>
+  <g fill="none" stroke="#74645a" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M300 635V345" stroke-width="7"/>
+    <path d="M295 470c-95-10-145-72-128-142 72-8 130 48 128 142Z" stroke-width="6"/>
+    <path d="M305 510c92-6 148-63 138-134-71-14-134 38-138 134Z" stroke-width="6"/>
+    <circle cx="300" cy="270" r="92" stroke-width="7"/>
+    <path d="M300 178c52 22 79 57 80 105M220 283c21-54 54-82 103-93M244 348c51-8 91-32 126-73" stroke-width="4" opacity=".7"/>
+    <path d="M225 635h150l-24 76H249Z" stroke-width="7"/>
+  </g>
+</svg>

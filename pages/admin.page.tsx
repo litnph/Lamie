@@ -29,9 +29,9 @@ const AdminPage: React.FC<{ products: FlowerProduct[], onLogout: () => void }> =
           <tbody className="divide-y divide-cream-100">
             {products.map(p => (
               <tr key={p.id} className="hover:bg-cream-50 transition-colors">
-                <td className="p-5"><img src={p.image} className="w-12 h-16 object-cover rounded" /></td>
+                <td className="p-5"><img src={p.images[0]?.url} alt={p.images[0]?.alt || p.name} className="w-12 h-16 object-cover rounded" /></td>
                 <td className="p-5 font-serif text-mocha-900 text-lg">{p.name}</td>
-                <td className="p-5 text-sm text-mocha-500 uppercase tracking-tighter">{p.category}</td>
+                <td className="p-5 text-sm text-mocha-500 uppercase tracking-tighter">{p.category.name}</td>
                 <td className="p-5 text-mocha-800">{formatVndCurrency(p.price)}</td>
                 <td className="p-5"><button className="text-xs text-mocha-400 hover:text-mocha-800 uppercase font-bold">Edit</button></td>
               </tr>
