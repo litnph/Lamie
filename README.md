@@ -1,37 +1,38 @@
 # Lamie storefront
 
-The customer storefront is a React/Vite application. Product data is a generated, same-origin static export; the browser does not call `API_Lamie` for the catalog.
+Website giới thiệu và catalog tĩnh của Lamie, xây bằng React 19, TypeScript và Vite. Website giúp khách khám phá mẫu hoa rồi liên hệ Lamie qua kênh thật; không có đăng nhập, giỏ hàng, thanh toán hoặc form gửi giả.
 
-## Local development
+## Route
 
-Requirements: Node.js 22 or a current supported Node.js release.
+- `/`: trang chủ.
+- `/mau-hoa`: catalog, tìm kiếm/lọc/sắp xếp và đồng bộ trạng thái lên URL.
+- `/mau-hoa/:slug`: chi tiết mẫu hoa.
+- Mọi URL khác: trang 404 nội bộ.
+
+Router dùng History API. Hosting production phải rewrite deep link về `index.html`; xem [docs/STATIC_HOSTING.md](docs/STATIC_HOSTING.md).
+
+## Chạy local
+
+Yêu cầu Node.js 22 hoặc một bản Node.js còn được hỗ trợ.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Vite serves the exporter-owned files from `public/fe-data` at `/fe-data`. Run the Admin FE Data export before building or serving a catalogue; when no export exists, the storefront renders its explicit unavailable state.
+Vite mặc định mở tại `http://localhost:3000`. Chế độ development hiển thị đúng 24 mẫu demo và luôn gắn nhãn cảnh báo. Dữ liệu demo không được đưa vào production build.
 
-## FE Data contract
+## Dữ liệu và cấu hình
 
-The generated directory is:
+- Schema, dữ liệu production và demo: `features/catalog/catalog.data.ts` và `features/catalog/catalog.types.ts`.
+- Taxonomy dùng chung cho UI/filter: `features/catalog/catalog.taxonomy.ts`.
+- Hotline, địa chỉ và kênh social: `app/site-config.ts`.
+- Analytics: `app/analytics.ts`; adapter hiện cố ý không gửi dữ liệu cho tới khi có công cụ, consent policy và cấu hình production được duyệt.
+- Ảnh sản phẩm demo từ nguồn cũ nằm trong `public/fe-data`. Bộ ảnh concept tự tạo cho hero/story/category/placeholder nằm trong `public/images/editorial` và tiếp tục có chú thích chờ Lamie duyệt.
 
-```text
-public/fe-data/
-  manifest.json
-  products.json
-  images/
-    products/
-```
+`PRODUCTION_PRODUCTS` hiện rỗng vì chưa có catalog thật đã duyệt. Không sao chép `DEMO_PRODUCTS` sang production. Quy trình thêm dữ liệu nằm trong [docs/DATA_GUIDE.md](docs/DATA_GUIDE.md).
 
-The storefront-owned broken-image artwork lives at `public/images/product-fallback.svg`, outside the exporter-owned directory, so an atomic FE Data publish cannot remove it.
-
-`manifest.json` identifies the catalog file and its SHA-256 version. Product and image paths must be relative, use `/`, and remain inside `fe-data`. The frontend validates the catalog checksum, schema version `1.0`, timestamps, counts, required product fields, and safe paths before rendering anything.
-
-The API exporter owns this directory. It should stage and validate a complete export before atomically replacing the generated files. A normal static deployment must run the export before the FE build or otherwise provide the generated directory as a build artifact.
-
-## Quality checks
+## Kiểm tra chất lượng
 
 ```bash
 npm run lint
@@ -41,8 +42,39 @@ npm run build
 npm run preview
 ```
 
-After `npm run build`, Vite copies the export to `dist/fe-data`. A production smoke test should serve `dist`, load the home, shop, and product-detail views, and verify every catalog request stays on the storefront origin while `API_Lamie` is stopped.
+QA hình ảnh trên Windows có Microsoft Edge:
 
-No AI or backend API key belongs in this project. AI provider configuration is server-only in `API_Lamie`.
+```bash
+npm run dev -- --host 127.0.0.1 --port 3000
+npm run qa:visual
+```
 
-The end-to-end migration/export/deployment procedure is in the sibling runbook `API_Lamie/docs/INGREDIENTS_FE_DATA_CONTENT_RUNBOOK.md`.
+Script chụp Home/Catalog/Detail tại 1440, 1024, 768, 390 và 360 px; đồng thời kiểm tra overflow, lỗi console/HTTP, số dòng hero và focus restoration của dialog.
+
+## Build và bàn giao
+
+```bash
+npm run build
+npm run preview
+```
+
+Output nằm trong `dist/`. Trước khi phát hành cần:
+
+- thay dữ liệu/ảnh demo bằng nội dung production đã duyệt;
+- xác nhận logo/font/ảnh hero, địa chỉ, giờ mở cửa và mọi kênh liên hệ;
+- xác nhận domain, canonical, sitemap/robots và cấu hình rewrite của host;
+- smoke test trực tiếp `/`, `/mau-hoa`, một `/mau-hoa/:slug` và URL 404;
+- chọn analytics cùng consent policy nếu thực sự cần.
+
+Vite SPA chỉ thay `document.title` và description ở client. Social preview/OG riêng cho từng sản phẩm cần prerender, SSR hoặc pipeline HTML khác; hiện chưa được giả định là đã hỗ trợ.
+
+## Tài liệu
+
+- Product truth: [PRODUCT.md](PRODUCT.md)
+- Design system: [DESIGN.md](DESIGN.md)
+- Trạng thái triển khai: [CODEX_PROGRESS.md](CODEX_PROGRESS.md)
+- Hướng dẫn dữ liệu: [docs/DATA_GUIDE.md](docs/DATA_GUIDE.md)
+- Nguồn và prompt ảnh concept: [docs/IMAGE_ASSETS.md](docs/IMAGE_ASSETS.md)
+- Hướng dẫn hosting: [docs/STATIC_HOSTING.md](docs/STATIC_HOSTING.md)
+
+Không đặt API key hoặc secret trong repository này.

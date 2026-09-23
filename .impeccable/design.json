@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T23:58:00+07:00",
+  "title": "Design System: Lamie Storefront",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Paper Cream", "canonical": "#f3ebdd", "tonalRamp": ["oklch(15% 0.025 78)", "oklch(28% 0.025 78)", "oklch(41% 0.025 78)", "oklch(54% 0.025 78)", "oklch(67% 0.025 78)", "oklch(78% 0.025 78)", "oklch(88% 0.025 78)", "oklch(95% 0.025 78)"] },
+      "paper-light": { "role": "neutral", "displayName": "Light Paper", "canonical": "#fbf8f2", "tonalRamp": ["oklch(15% 0.012 78)", "oklch(28% 0.012 78)", "oklch(41% 0.012 78)", "oklch(54% 0.012 78)", "oklch(67% 0.012 78)", "oklch(78% 0.012 78)", "oklch(88% 0.012 78)", "oklch(97% 0.012 78)"] },
+      "paper-deep": { "role": "neutral", "displayName": "Deep Paper", "canonical": "#e7dcc9", "tonalRamp": ["oklch(15% 0.035 78)", "oklch(28% 0.035 78)", "oklch(41% 0.035 78)", "oklch(54% 0.035 78)", "oklch(67% 0.035 78)", "oklch(78% 0.035 78)", "oklch(88% 0.035 78)", "oklch(95% 0.035 78)"] },
+      "ink": { "role": "primary", "displayName": "Ink Brown", "canonical": "#38271f", "tonalRamp": ["oklch(15% 0.035 48)", "oklch(28% 0.035 48)", "oklch(41% 0.035 48)", "oklch(54% 0.035 48)", "oklch(67% 0.035 48)", "oklch(78% 0.035 48)", "oklch(88% 0.035 48)", "oklch(95% 0.035 48)"] },
+      "mocha": { "role": "primary", "displayName": "Lamie Mocha", "canonical": "#6b3a23", "tonalRamp": ["oklch(15% 0.075 48)", "oklch(28% 0.075 48)", "oklch(41% 0.075 48)", "oklch(54% 0.075 48)", "oklch(67% 0.075 48)", "oklch(78% 0.075 48)", "oklch(88% 0.075 48)", "oklch(95% 0.075 48)"] },
+      "mocha-soft": { "role": "neutral", "displayName": "Soft Mocha", "canonical": "#805c48", "tonalRamp": ["oklch(15% 0.045 48)", "oklch(28% 0.045 48)", "oklch(41% 0.045 48)", "oklch(54% 0.045 48)", "oklch(67% 0.045 48)", "oklch(78% 0.045 48)", "oklch(88% 0.045 48)", "oklch(95% 0.045 48)"] },
+      "sage": { "role": "secondary", "displayName": "Botanical Sage", "canonical": "#697561", "tonalRamp": ["oklch(15% 0.035 135)", "oklch(28% 0.035 135)", "oklch(41% 0.035 135)", "oklch(54% 0.035 135)", "oklch(67% 0.035 135)", "oklch(78% 0.035 135)", "oklch(88% 0.035 135)", "oklch(95% 0.035 135)"] },
+      "sage-light": { "role": "secondary", "displayName": "Light Sage Paper", "canonical": "#cbd2c2", "tonalRamp": ["oklch(15% 0.025 135)", "oklch(28% 0.025 135)", "oklch(41% 0.025 135)", "oklch(54% 0.025 135)", "oklch(67% 0.025 135)", "oklch(78% 0.025 135)", "oklch(88% 0.025 135)", "oklch(95% 0.025 135)"] },
+      "rose": { "role": "tertiary", "displayName": "Dusty Rose", "canonical": "#b77f80", "tonalRamp": ["oklch(15% 0.055 20)", "oklch(28% 0.055 20)", "oklch(41% 0.055 20)", "oklch(54% 0.055 20)", "oklch(67% 0.055 20)", "oklch(78% 0.055 20)", "oklch(88% 0.055 20)", "oklch(95% 0.055 20)"] },
+      "rose-light": { "role": "tertiary", "displayName": "Blush Paper", "canonical": "#ead2d0", "tonalRamp": ["oklch(15% 0.025 20)", "oklch(28% 0.025 20)", "oklch(41% 0.025 20)", "oklch(54% 0.025 20)", "oklch(67% 0.025 20)", "oklch(78% 0.025 20)", "oklch(88% 0.025 20)", "oklch(95% 0.025 20)"] },
+      "line": { "role": "neutral", "displayName": "Paper Line", "canonical": "#cbbca8", "tonalRamp": ["oklch(15% 0.03 68)", "oklch(28% 0.03 68)", "oklch(41% 0.03 68)", "oklch(54% 0.03 68)", "oklch(67% 0.03 68)", "oklch(78% 0.03 68)", "oklch(88% 0.03 68)", "oklch(95% 0.03 68)"] },
+      "line-dark": { "role": "neutral", "displayName": "Dark Paper Line", "canonical": "#9c806d", "tonalRamp": ["oklch(15% 0.04 58)", "oklch(28% 0.04 58)", "oklch(41% 0.04 58)", "oklch(54% 0.04 58)", "oklch(67% 0.04 58)", "oklch(78% 0.04 58)", "oklch(88% 0.04 58)", "oklch(95% 0.04 58)"] },
+      "focus": { "role": "primary", "displayName": "Focus Berry", "canonical": "#8f4850", "tonalRamp": ["oklch(15% 0.08 18)", "oklch(28% 0.08 18)", "oklch(41% 0.08 18)", "oklch(54% 0.08 18)", "oklch(67% 0.08 18)", "oklch(78% 0.08 18)", "oklch(88% 0.08 18)", "oklch(95% 0.08 18)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Editorial Display", "purpose": "Hero statements only; keep to two desktop or three mobile lines." },
+      "headline": { "displayName": "Editorial Headline", "purpose": "Page and section headings." },
+      "body": { "displayName": "Vietnamese Body", "purpose": "Interface copy, descriptions and controls." },
+      "label": { "displayName": "Functional Label", "purpose": "Real metadata, statuses and compact controls." }
+    },
+    "shadows": [
+      { "name": "photo-soft", "value": "0 18px 56px rgb(56 39 31 / 0.14)", "purpose": "Ambient lift for editorial photography only." },
+      { "name": "dialog", "value": "0 28px 90px rgb(56 39 31 / 0.24)", "purpose": "Strong separation for modal dialogs and lightboxes." }
+    ],
+    "motion": [
+      { "name": "fast", "value": "180ms ease", "purpose": "Color and visibility state changes." },
+      { "name": "ease-out", "value": "260ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Transform-based arrows, panels and contact dock." },
+      { "name": "reduced-motion", "value": "0.01ms; iteration-count: 1", "purpose": "Global motion reduction override." }
+    ],
+    "breakpoints": [
+      { "name": "wide", "value": "max-width: 1199px" },
+      { "name": "desktop-collapse", "value": "max-width: 1023px" },
+      { "name": "mobile", "value": "max-width: 767px" },
+      { "name": "compact-mobile", "value": "max-width: 389px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-emphasis contact or navigation action.",
+      "html": "<button class=\"ds-button-primary\">Tư vấn đặt hoa</button>",
+      "css": ".ds-button-primary{min-height:2.875rem;padding:.78rem 1.15rem;border:1px solid var(--ink);border-radius:var(--radius-sm);background:var(--ink);color:var(--paper-light);font:600 .875rem/1.2 var(--font-body);cursor:pointer;transition:background 180ms ease,border-color 180ms ease,transform 120ms ease}.ds-button-primary:hover{background:var(--mocha);border-color:var(--mocha)}.ds-button-primary:active{transform:translateY(1px)}.ds-button-primary:focus-visible{outline:2px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action on paper surfaces.",
+      "html": "<button class=\"ds-button-outline\">Xem mẫu hoa</button>",
+      "css": ".ds-button-outline{min-height:2.875rem;padding:.78rem 1.15rem;border:1px solid var(--line-dark);border-radius:var(--radius-sm);background:transparent;color:var(--ink);font:600 .875rem/1.2 var(--font-body);cursor:pointer;transition:background 180ms ease,border-color 180ms ease}.ds-button-outline:hover{background:rgb(255 255 255 / .35);border-color:var(--ink)}.ds-button-outline:focus-visible{outline:2px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Warm, high-contrast catalog search field.",
+      "html": "<label class=\"ds-field\"><span>Tìm mẫu hoa</span><input placeholder=\"Hoa hồng đỏ, bó tốt nghiệp…\"></label>",
+      "css": ".ds-field{display:grid;gap:.4rem;color:var(--mocha-soft);font:600 .72rem/1.2 var(--font-body)}.ds-field input{width:100%;min-height:2.8rem;padding:.7rem .8rem;border:1px solid var(--line-dark);border-radius:var(--radius-sm);background:#fffdf8;color:var(--ink);font:400 1rem/1.4 var(--font-body)}.ds-field input:hover{border-color:var(--mocha)}.ds-field input:focus-visible{outline:2px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "description": "Removable catalog filter with a quiet capsule form.",
+      "html": "<button class=\"ds-filter-chip\">Hoa tươi ×</button>",
+      "css": ".ds-filter-chip{min-height:2.4rem;padding:.45rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--paper-light);color:var(--ink);font:500 .7rem/1.2 var(--font-body);cursor:pointer}.ds-filter-chip:hover{border-color:var(--ink)}.ds-filter-chip:focus-visible{outline:2px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "description": "Flat image-first catalog item; no generic container chrome.",
+      "html": "<article class=\"ds-product-card\"><div class=\"ds-product-image\"></div><p>DEMO-001</p><h3>Dịu hồng</h3><strong>550.000 đ</strong></article>",
+      "css": ".ds-product-card{display:grid;gap:.35rem;color:var(--ink);font-family:var(--font-body)}.ds-product-image{aspect-ratio:4/5;background:var(--paper-deep);overflow:hidden}.ds-product-card p{margin:.7rem 0 0;color:var(--mocha-soft);font-size:.67rem;letter-spacing:.06em}.ds-product-card h3{margin:0;font:500 1.25rem/1.1 var(--font-display)}.ds-product-card strong{font-size:.9rem}.ds-product-card:focus-within{outline:2px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Editorial Occasion Tile",
+      "kind": "custom",
+      "description": "Gapless bento tile for discovery by occasion.",
+      "html": "<a class=\"ds-occasion\" href=\"#\"><span><strong>Sinh nhật</strong><small>Từ dịu dàng đến rực rỡ</small></span><b aria-hidden=\"true\">→</b></a>",
+      "css": ".ds-occasion{min-height:12rem;padding:1.5rem;display:grid;grid-template-columns:1fr auto;align-items:end;gap:1rem;border:1px solid var(--line-dark);background:var(--paper-light);color:var(--ink);text-decoration:none;transition:background 260ms ease,color 260ms ease}.ds-occasion span{display:grid;gap:.5rem}.ds-occasion strong{font:500 2rem/1.1 var(--font-display)}.ds-occasion small{font-family:var(--font-body);opacity:.76}.ds-occasion:hover{background:var(--ink);color:var(--paper-light)}.ds-occasion:focus-visible{outline:2px solid var(--focus);outline-offset:3px}"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "description": "Quiet navigation with a directional underline state.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">Mẫu hoa</a>",
+      "css": ".ds-nav-link{position:relative;min-height:2.75rem;display:inline-grid;place-items:center;color:var(--ink);font:500 .84rem/1.2 var(--font-body);text-decoration:none}.ds-nav-link::after{content:'';position:absolute;right:0;bottom:.3rem;left:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform 260ms var(--ease-out)}.ds-nav-link:hover::after,.ds-nav-link:focus-visible::after{transform:scaleX(1);transform-origin:left}.ds-nav-link:focus-visible{outline:2px solid var(--focus);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Botanical Paper Editorial",
+    "overview": "Lamie feels like a quiet florist's lookbook assembled from warm paper, botanical color fields, restrained typography and real flower imagery. Editorial scale creates personality on storytelling surfaces while catalog and detail views become calmer, denser galleries.",
+    "keyCharacteristics": ["Warm paper canvases with ink-brown type.", "Lora headlines paired with precise Be Vietnam Pro UI copy.", "Broad editorial rhythm on Home; compact task rhythm in catalog.", "Dusty rose and botanical sage used as supporting fields.", "Selective transform-based motion with reduced-motion support."],
+    "rules": [
+      { "name": "The Flower Leads Rule", "body": "UI colors remain muted; saturated hues belong to approved product photography.", "section": "colors" },
+      { "name": "The Ink Is Scarce Rule", "body": "Full ink backgrounds mark major narrative or conversion moments, not every container.", "section": "colors" },
+      { "name": "The Wide Headline Rule", "body": "Prefer a broad two- or three-line editorial composition over a narrow stack of many short lines.", "section": "typography" },
+      { "name": "The Honest Label Rule", "body": "Labels describe state or source; they are not decorative eyebrow copy.", "section": "typography" },
+      { "name": "The Tonal-First Rule", "body": "Try a paper shade or rule before adding a shadow.", "section": "elevation" },
+      { "name": "The Transform-Only Motion Rule", "body": "Animate opacity and transforms; never animate layout dimensions.", "section": "elevation" }
+    ],
+    "dos": ["Do let approved flower photography be the strongest chromatic element.", "Do keep desktop hero headings to two lines and mobile hero headings to three or fewer.", "Do use paper rules and negative space to group information.", "Do preserve visible focus, reduced motion and truthful demo/source labels.", "Do keep task-heavy catalog views denser than narrative Home sections."],
+    "donts": ["Don't introduce gradients, glass cards, excessive pills or card-inside-card layouts.", "Don't animate width, height, margin or padding.", "Don't add testimonials, prices, delivery promises or policies without approved source data.", "Don't use decorative section numbers where there is no real sequence.", "Don't let a sticky control cover a heading, focus target or the end of the page."]
+  }
+}

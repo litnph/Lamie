@@ -1,6 +1,3 @@
-
-import React from 'react';
-
 export const LamieLogoIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <path 

@@ -9,15 +9,22 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "qa:visual": "node scripts/visual-check.mjs",
+    "qa:production": "node scripts/production-smoke.mjs"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.15.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "playwright-core": "^1.63.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
